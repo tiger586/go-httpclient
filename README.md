@@ -88,6 +88,9 @@ httpclient.PrettyPrint(body)
 ## 輔助函數
 - PrettyPrint(body []byte)  
 將 JSON 回傳格式化輸出，如果不是 JSON，則原樣輸出文字。
+- GetJSONField(body []byte, key string) string  
+直接從返回的 body 取值，支援巢狀 key，例如 "data.user.name"  
+如果 body 不是 JSON 或 key 不存在，回傳空字串。
 
 ## 授權
 

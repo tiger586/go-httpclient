@@ -88,6 +88,9 @@ httpclient.PrettyPrint(body)
 ## Helper
 - PrettyPrint(body []byte)  
 Pretty print JSON response. If body is not JSON, prints as string.
+- GetJSONField(body []byte, key string) string  
+Retrieves the value directly from the returned body, supports nested keys, such as "data.user.name"  
+If the body is not JSON or the key does not exist, it returns an empty string.
 
 ## License
 
