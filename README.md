@@ -18,7 +18,7 @@
 
 - 鏈式呼叫 Request
 - 支援 JSON / Form / Multipart
-- 可用於 PUT / PATCH / DELETE / GET
+- 可用於 GET / POST / PUT / PATCH / DELETE
 - 簡單新增自訂 Headers
 - 內建 JSON PrettyPrint 輔助函數
 

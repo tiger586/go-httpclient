@@ -18,7 +18,10 @@ type Request struct {
 }
 
 // 建立 Request
+//
+// method = GET / POST / PUT / PATCH / DELETE
 func NewRequest(method, url string) *Request {
+	method = strings.ToUpper(method) // ✅ 自動轉大寫
 	return &Request{
 		Method:  method,
 		URL:     url,

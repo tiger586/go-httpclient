@@ -18,7 +18,7 @@ Suitable for RESTful web service clients, It provides a chainable API for making
 
 - Chainable requests
 - JSON / Form / Multipart support
-- PUT / PATCH / DELETE / GET compatible
+- GET / POST / PUT / PATCH / DELETE compatible
 - Easy headers addition
 - Built-in JSON PrettyPrint helper
 
