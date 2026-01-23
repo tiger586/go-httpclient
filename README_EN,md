@@ -1,0 +1,94 @@
+# go-httpclient [![Go version](https://img.shields.io/github/go-mod/go-version/tiger586/go-http-client)](https://github.com/tiger586/go-http-client/blob/main/go.mod)
+
+```
+/
+├── go.mod          # Go module file
+├── client.go       # Core Client + DoRequest
+├── request.go      # Main Request struct + chainable methods
+├── multipart.go    # Shared multipart utility
+├── decode.go       # JSON decode / PrettyPrint helper
+```
+
+A lightweight Go HTTP client with support for JSON, Form, and Multipart requests.  
+Suitable for RESTful web service clients, It provides a chainable API for making HTTP requests in a clean and unified way.
+
+---
+
+## Features
+
+- Chainable requests
+- JSON / Form / Multipart support
+- PUT / PATCH / DELETE / GET compatible
+- Easy headers addition
+- Built-in JSON PrettyPrint helper
+
+---
+
+## Installation
+
+```bash
+go get github.com/tiger586/go-httpclient
+```
+
+## Usage
+1. POST JSON
+```go
+payload := map[string]any{
+    "name": "Tiger",
+    "email": "tiger@example.com",
+}
+
+headers := map[string]string{
+    "Authorization": "Bearer abc123",
+    "Accept": "application/json",
+}
+
+body, status, err := httpclient.NewRequest("POST", "https://httpbin.org/post").
+    JSON(payload).
+    HeadersAdd(headers).
+    Do()
+if err != nil {
+    log.Fatal(err)
+}
+
+httpclient.PrettyPrint(body)
+```
+
+2. POST Form
+```go
+form := map[string]string{
+    "name": "Tiger",
+    "email": "tiger@example.com",
+}
+
+body, status, _ = httpclient.NewRequest("POST", "https://httpbin.org/post").
+    Form(form).
+    Do()
+
+httpclient.PrettyPrint(body)
+```
+
+3. POST Multipart (fields + files)
+```go
+fields := map[string]string{
+    "name": "Tiger",
+}
+
+files := map[string]string{
+    "file": "./test.png",
+}
+
+body, status, _ = httpclient.NewRequest("POST", "https://httpbin.org/post").
+    Multipart(fields, files).
+    Do()
+
+httpclient.PrettyPrint(body)
+```
+
+## Helper
+- PrettyPrint(body []byte)  
+Pretty print JSON response. If body is not JSON, prints as string.
+
+## License
+
+MIT License
