@@ -21,6 +21,9 @@
 - 可用於 GET / POST / PUT / PATCH / DELETE
 - 簡單新增自訂 Headers
 - 內建 JSON PrettyPrint 輔助函數
+- 內建 GetJSONField 輔助函數
+- 預設 timeout 時間為：10 秒，可以自行更改設定
+	
 
 ---
 
@@ -81,6 +84,18 @@ files := map[string]string{
 body, status, _ = httpclient.NewRequest("POST", "https://httpbin.org/post").
     Multipart(fields, files).
     Do()
+
+httpclient.PrettyPrint(body)
+
+// 自訂 timeout
+client := httpclient.NewClient(100 * time.Millisecond)
+body, status, err = client.NewRequest("POST", "https://httpbin.org/post").
+    JSON(payload).
+    HeadersAdd(headers).
+    Do()
+if err != nil {
+    log.Fatal(err)
+}
 
 httpclient.PrettyPrint(body)
 ```

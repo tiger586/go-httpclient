@@ -21,6 +21,8 @@ Suitable for RESTful web service clients, It provides a chainable API for making
 - GET / POST / PUT / PATCH / DELETE compatible
 - Easy headers addition
 - Built-in JSON PrettyPrint helper
+- Built-in GetJSONField helper
+- The default timeout is 10 seconds, but you can change the setting
 
 ---
 
@@ -81,6 +83,18 @@ files := map[string]string{
 body, status, _ = httpclient.NewRequest("POST", "https://httpbin.org/post").
     Multipart(fields, files).
     Do()
+
+httpclient.PrettyPrint(body)
+
+// Set timeout
+client := httpclient.NewClient(100 * time.Millisecond)
+body, status, err = client.NewRequest("POST", "https://httpbin.org/post").
+    JSON(payload).
+    HeadersAdd(headers).
+    Do()
+if err != nil {
+    log.Fatal(err)
+}
 
 httpclient.PrettyPrint(body)
 ```

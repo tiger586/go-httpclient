@@ -11,6 +11,7 @@ import (
 )
 
 type Request struct {
+	client  *Client
 	Method  string
 	URL     string
 	Headers map[string]string
@@ -20,9 +21,24 @@ type Request struct {
 // 建立 Request
 //
 // method = GET / POST / PUT / PATCH / DELETE
+// NewRequest 保留舊用法，使用預設 client（10 秒 timeout）
+//
+//	func NewRequest(method, url string) *Request {
+//		method = strings.ToUpper(method) // ✅ 自動轉大寫
+//		return &Request{
+//			Method:  method,
+//			URL:     url,
+//			Headers: map[string]string{},
+//		}
+//	}
 func NewRequest(method, url string) *Request {
-	method = strings.ToUpper(method) // ✅ 自動轉大寫
+	return defaultClient.NewRequest(method, url)
+}
+
+func (c *Client) NewRequest(method, url string) *Request {
+	method = strings.ToUpper(method)
 	return &Request{
+		client:  c, // 指向你自訂的 client
 		Method:  method,
 		URL:     url,
 		Headers: map[string]string{},
@@ -75,7 +91,8 @@ func (r *Request) Do() ([]byte, int, error) {
 		req.Header.Set(k, v)
 	}
 
-	resp, err := defaultClient.Do(req)
+	// resp, err := defaultClient.Do(req)
+	resp, err := r.client.http.Do(req)
 	if err != nil {
 		return nil, 0, err
 	}
