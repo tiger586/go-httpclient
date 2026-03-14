@@ -30,7 +30,7 @@
 ## 安裝
 
 ```bash
-go get github.com/tiger586/go-httpclient
+go get -u github.com/tiger586/go-httpclient
 ```
 
 ## 使用範例

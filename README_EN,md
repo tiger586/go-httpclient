@@ -29,7 +29,7 @@ Suitable for RESTful web service clients, It provides a chainable API for making
 ## Installation
 
 ```bash
-go get github.com/tiger586/go-httpclient
+go get -u github.com/tiger586/go-httpclient
 ```
 
 ## Usage

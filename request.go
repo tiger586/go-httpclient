@@ -101,3 +101,27 @@ func (r *Request) Do() ([]byte, int, error) {
 	body, _ := io.ReadAll(resp.Body)
 	return body, resp.StatusCode, nil
 }
+
+type Result struct {
+	Body   []byte
+	Status int
+	Err    error
+}
+
+func (r *Request) DoAsync() <-chan Result {
+	ch := make(chan Result, 1)
+	go func() {
+		body, status, err := r.Do()
+		ch <- Result{body, status, err}
+	}()
+	return ch
+}
+
+// 使用方式：
+
+// ch := client.NewRequest("POST", url).DoAsync()
+
+// fmt.Println("non-blocking")
+
+// res := <-ch
+// fmt.Println(res.Status, res.Err)
